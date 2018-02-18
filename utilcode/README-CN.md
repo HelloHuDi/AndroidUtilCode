@@ -2,7 +2,7 @@
 
 Gradle:
 ```groovy
-compile 'com.blankj:utilcode:1.12.0'
+compile 'com.blankj:utilcode:1.12.6'
 ```
 
 
@@ -75,6 +75,7 @@ cleanAppData         : 清除 App 所有数据
 getStatusBarHeight                   : 获取状态栏高度（px）
 setStatusBarVisibility               : 设置状态栏是否可见
 isStatusBarVisible                   : 判断状态栏是否可见
+setStatusBarLightMode                : 设置状态栏是否为浅色模式
 addMarginTopEqualStatusBarHeight     : 为 view 增加 MarginTop 为状态栏高度
 subtractMarginTopEqualStatusBarHeight: 为 view 减少 MarginTop 为状态栏高度
 setStatusBarColor                    : 设置状态栏颜色
@@ -154,7 +155,8 @@ init: 初始化
 * ### 设备相关 -> [DeviceUtils.java][device.java] -> [Demo][device.demo]
 ```
 isDeviceRooted   : 判断设备是否 rooted
-getSDKVersion    : 获取设备系统版本号
+getSDKVersionName: 获取设备系统版本号
+getSDKVersionCode: 获取设备系统版本码
 getAndroidID     : 获取设备 AndroidID
 getMacAddress    : 获取设备 MAC 地址
 getManufacturer  : 获取设备厂商
@@ -388,9 +390,12 @@ getDomainAddress      : 获取域名 ip 地址
 
 * ### 对象相关 -> [ObjectUtils.java][object.java] -> [Test][object.test]
 ```
-isEmpty   : 判断对象是否为空
-isNotEmpty: 判断对象是否非空
-equals    : 判断对象是否相等
+isEmpty       : 判断对象是否为空
+isNotEmpty    : 判断对象是否非空
+equals        : 判断对象是否相等
+requireNonNull: 检查对象非空
+getOrDefault  : 获取非空或默认对象
+hashCode      : 获取对象哈希值
 ```
 
 * ### 权限相关 -> [PermissionUtils.java][permission.java] -> [Demo][permission.demo]

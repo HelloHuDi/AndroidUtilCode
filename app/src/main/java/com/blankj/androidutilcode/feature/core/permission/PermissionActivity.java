@@ -30,7 +30,7 @@ import java.util.List;
 public class PermissionActivity extends BaseBackActivity {
 
     TextView tvAboutPermission;
-    String permissions;
+    String   permissions;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, PermissionActivity.class);
@@ -92,6 +92,7 @@ public class PermissionActivity extends BaseBackActivity {
                             @Override
                             public void onGranted(List<String> permissionsGranted) {
                                 updateAboutPermission();
+                                LogUtils.d(permissionsGranted);
                             }
 
                             @Override
@@ -123,6 +124,7 @@ public class PermissionActivity extends BaseBackActivity {
                             @Override
                             public void onGranted(List<String> permissionsGranted) {
                                 updateAboutPermission();
+                                LogUtils.d(permissionsGranted);
                             }
 
                             @Override

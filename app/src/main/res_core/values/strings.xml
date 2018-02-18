@@ -14,6 +14,7 @@
     <string name="demo_permission">PermissionUtils Demo</string>
     <string name="demo_phone">PhoneUtils Demo</string>
     <string name="demo_process">ProcessUtils Demo</string>
+    <string name="demo_reflect">ReflectUtils Demo</string>
     <string name="demo_screen">ScreenUtils Demo</string>
     <string name="demo_sdcard">SDCardUtils Demo</string>
     <string name="demo_snackbar">Snackbar Demo</string>
@@ -76,6 +77,8 @@
     <string name="bar_status_about">About Status</string>
     <string name="bar_status_show">Show Status</string>
     <string name="bar_status_hide">Hide Status</string>
+    <string name="bar_status_light_mode">Light Mode Status</string>
+    <string name="bar_status_dark_mode">Dark Mode Status</string>
     <string name="bar_status_set_color">Set Color</string>
     <string name="bar_status_set_alpha">Set Alpha</string>
     <string name="bar_status_set_image_view">Set Image View</string>

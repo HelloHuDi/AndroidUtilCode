@@ -2,7 +2,7 @@
 
 Gradle:
 ```groovy
-compile 'com.blankj:utilcode:1.12.0'
+compile 'com.blankj:utilcode:1.12.6'
 ```
 
 
@@ -75,6 +75,7 @@ cleanAppData
 getStatusBarHeight
 setStatusBarVisibility
 isStatusBarVisible
+setStatusBarLightMode
 addMarginTopEqualStatusBarHeight
 subtractMarginTopEqualStatusBarHeight
 setStatusBarColor
@@ -154,7 +155,8 @@ init
 * ### About Device -> [DeviceUtils.java][device.java] -> [Demo][device.demo]
 ```
 isDeviceRooted
-getSDKVersion
+getSDKVersionName
+getSDKVersionCode
 getAndroidID
 getMacAddress
 getManufacturer
@@ -391,6 +393,9 @@ getDomainAddress
 isEmpty
 isNotEmpty
 equals
+requireNonNull
+getOrDefault
+hashCode
 ```
 
 * ### About Permission -> [PermissionUtils.java][permission.java] -> [Demo][permission.demo]
@@ -725,7 +730,7 @@ getComments
 [process.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/process/ProcessActivity.java
 
 [reflect.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ReflectUtils.java
-[reflect.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/ReflectUtilsTest.java
+[reflect.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/reflect/ReflectUtilsTest.java
 
 [regex.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/RegexUtils.java
 [regex.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/RegexUtilsTest.java
