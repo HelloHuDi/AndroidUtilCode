@@ -1,15 +1,52 @@
-* 18/02/10 完善中文版为英文版
+* 18/04/24 修复多 FileProvider 带来的问题，发布 1.14.0 版本
+* 18/04/23 新增 RSA 加解密，发布 1.13.16 版本
+* 18/04/22 新增 LogUtils 设置栈偏移
+* 18/04/21 新增 AppUtils#relaunchApp、DeviceUtils#getABIs，发布 1.13.15 版本
+* 18/04/20 新增 BarUtils#setNavBarColor、BarUtils#getNavBarColor
+* 18/04/19 新增 Process#isMainProcess、Process#getCurrentProcessName，发布 1.13.14 版本
+* 18/04/18 修复 LogUtils 头部空指针异常，SPUtils、CacheUtils 存储空值异常，发布 1.13.13 版本
+* 18/04/17 修复 ToastUtils 内存泄漏问题，感谢 [LambertCoding](https://github.com/LambertCoding)，发布 1.13.12 版本
+* 18/04/16 完善 AppUtils#installAppSilent 路径包含空格问题，发布 1.13.11 版本
+* 18/04/10 完善 OnCrashListener 回调崩溃信息，发布 1.13.10 版本
+* 18/04/09 修复静默安装重载错误，发布 1.13.9 版本
+* 18/04/08 修复获取栈顶 Activity 链表为空的异常，获取栈顶 Activity 放到 Utils 中，发布 1.13.8 版本
+* 18/04/06 新增 GsonUtils 及单元测试
+* 18/04/05 完善 README 文档
+* 18/04/03 修复 LogUtils 在 Android Studio 3.1 版本日志丑陋的问题，发布 1.13.7 版本
+* 18/03/29 兼容 Utils 的初始化传入 application，发布 1.13.6 版本
+* 18/03/20 修复 PermissionUtils 子进程的问题，发布 1.13.5 版本
+* 18/03/16 新增 gradle 插件来格式化 README
+* 18/03/14 修复 KeyboardUtils#getContentViewInvisibleHeight，发布 1.13.4 版本
+* 18/03/10 完善 AppUtils#installAppSilent 和 DeviceUtils#getMacAddress，发布 1.13.3 版本
+* 18/03/09 完善 ActivityUtils#getTopActivity
+* 18/03/08 新增反射获取栈顶 Activity 的方法，发布 1.13.2 版本
+* 18/03/07 修复 PermissionUtils 请求权限为 0 的 崩溃
+* 18/03/05 修复 Library Source does not match the bytecode for class LogUtils 问题，发布 1.13.1 版本
+* 18/03/04 完善 Javadoc 中文版为英文版，发布 1.13.0 版本
+* 18/03/04 完善 Javadoc 中文版为英文版
+* 18/03/03 完善 Javadoc 中文版为英文版
+* 18/03/02 完善 Javadoc 中文版为英文版
+* 18/03/01 完善 Javadoc 中文版为英文版
+* 18/02/28 完善 Javadoc 中文版为英文版
+* 18/02/27 完善 Javadoc 中文版为英文版
+* 18/02/26 完善 Javadoc 中文版为英文版
+* 18/02/25 完善 Javadoc 中文版为英文版
+* 18/02/24 完善 Javadoc 中文版为英文版
+* 18/02/23 完善 Javadoc 中文版为英文版
+* 18/02/22 完善 Javadoc 中文版为英文版
+* 18/02/21 完善 Javadoc 中文版为英文版
+* 18/02/10 完善 Javadoc 中文版为英文版
 * 18/02/09 完善非空转换插件 traute 的使用方式
 * 18/02/08 修复 ActivityUtils option 低版本为空的异常
 * 18/01/31 修复 default 相关的逻辑错误，发布 1.12.4，修复 ToastUtils 在 kotlin 中转义失败，发布 1.12.5
 * 18/01/28 修复 ToastUtils 默认样式问题，发布 1.12.2，新增 DeviceUtils#getSDKVersionName，发布 1.12.3
 * 18/01/27 修复 PermissionUtils 某些机型闪烁问题，发布 1.12.1
-* 18/01/17 完善 ReflectUtils 及 单元测试，发布 1.12.0 版本
-* 18/01/16 完善 ReflectUtils 及 单元测试
-* 18/01/15 完善 ReflectUtils 及 单元测试
-* 18/01/14 完善 ReflectUtils 及 单元测试
-* 18/01/13 完善 ReflectUtils 及 单元测试
-* 18/01/12 完善 ReflectUtils 及 单元测试
+* 18/01/17 完善 ReflectUtils 及单元测试，发布 1.12.0 版本
+* 18/01/16 完善 ReflectUtils 及单元测试
+* 18/01/15 完善 ReflectUtils 及单元测试
+* 18/01/14 完善 ReflectUtils 及单元测试
+* 18/01/13 完善 ReflectUtils 及单元测试
+* 18/01/12 完善 ReflectUtils 及单元测试
 * 18/01/11 修复 ImageUtils 的 fastBlur radius 为 1 recycle 的 bug，新增 CrashUtils 初始化崩溃监听事件，发布 1.11.1 版本
 * 18/01/10 完善 PermissionUtils 及 readme，发布 1.11.0 版本
 * 18/01/09 完善 demo 动态权限适配

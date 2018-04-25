@@ -1,12 +1,9 @@
 package com.blankj.androidutilcode;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 
 import com.blankj.androidutilcode.base.BaseApplication;
-import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -61,39 +58,23 @@ public class UtilsApp extends BaseApplication {
                 .setDir("")// 当自定义路径为空时，写入应用的/cache/log/目录中
                 .setFilePrefix("")// 当文件前缀为空时，默认为"util"，即写入文件为"util-MM-dd.txt"
                 .setBorderSwitch(true)// 输出日志是否带边框开关，默认开
+                .setSingleTagSwitch(true)// 一条日志仅输出一条，默认开，为美化 AS 3.1 的 Logcat
                 .setConsoleFilter(LogUtils.V)// log 的控制台过滤器，和 logcat 过滤器同理，默认 Verbose
                 .setFileFilter(LogUtils.V)// log 文件过滤器，和 logcat 过滤器同理，默认 Verbose
-                .setStackDeep(1);// log 栈深度，默认为 1
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                LogUtils.d(config.toString());
-            }
-        }).start();
-
+                .setStackDeep(1)// log 栈深度，默认为 1
+                .setStackOffset(0);// 设置栈偏移，比如二次封装的话就需要设置，默认为 0
+        LogUtils.d(config.toString());
     }
 
+    @SuppressLint("MissingPermission")
     private void initCrash() {
         CrashUtils.init(new CrashUtils.OnCrashListener() {
             @Override
-            public void onCrash(Throwable e) {
-                e.printStackTrace();
-                restartApp();
+            public void onCrash(String crashInfo, Throwable e) {
+                LogUtils.e(crashInfo);
+                AppUtils.relaunchApp();
             }
         });
-    }
-
-    private void restartApp() {
-        Intent intent = new Intent();
-        intent.setClassName("com.blankj.androidutilcode", "com.blankj.androidutilcode.MainActivity");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent restartIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        if (manager == null) return;
-        manager.set(AlarmManager.RTC, System.currentTimeMillis() + 1, restartIntent);
-        ActivityUtils.finishAllActivities();
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
     }
 }
 

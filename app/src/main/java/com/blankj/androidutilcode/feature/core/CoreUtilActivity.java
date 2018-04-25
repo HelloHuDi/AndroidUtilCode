@@ -3,6 +3,7 @@ package com.blankj.androidutilcode.feature.core;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.blankj.androidutilcode.R;
@@ -10,7 +11,6 @@ import com.blankj.androidutilcode.base.BaseBackActivity;
 import com.blankj.androidutilcode.feature.core.activity.ActivityActivity;
 import com.blankj.androidutilcode.feature.core.app.AppActivity;
 import com.blankj.androidutilcode.feature.core.bar.BarActivity;
-import com.blankj.androidutilcode.feature.core.clean.CleanActivity;
 import com.blankj.androidutilcode.feature.core.device.DeviceActivity;
 import com.blankj.androidutilcode.feature.core.fragment.FragmentActivity;
 import com.blankj.androidutilcode.feature.core.image.ImageActivity;
@@ -44,7 +44,7 @@ public class CoreUtilActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -54,7 +54,7 @@ public class CoreUtilActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.core_util));
     }
 
@@ -82,10 +82,6 @@ public class CoreUtilActivity extends BaseBackActivity {
 
     public void barClick(View view) {
         BarActivity.start(this);
-    }
-
-    public void cleanClick(View view) {
-        CleanActivity.start(this);
     }
 
     public void crashClick(View view) {

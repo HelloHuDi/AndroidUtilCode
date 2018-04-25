@@ -3,6 +3,7 @@ package com.blankj.androidutilcode.feature.core.process;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class ProcessActivity extends BaseBackActivity {
     private TextView tvAboutProcess;
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -42,7 +43,7 @@ public class ProcessActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_process));
 
         findViewById(R.id.btn_kill_all_background_processes).setOnClickListener(this);
@@ -51,7 +52,9 @@ public class ProcessActivity extends BaseBackActivity {
         tvAboutProcess.setText(new SpanUtils()
                 .appendLine("getForegroundProcessName: " + ProcessUtils.getForegroundProcessName())
                 .appendLine("getAllBackgroundProcesses: " + getSetItems(set))
-                .append("size: " + set.size())
+                .appendLine("size: " + set.size())
+                .appendLine("isMainProcess: " + ProcessUtils.isMainProcess())
+                .append("getCurrentProcessName: " + ProcessUtils.getCurrentProcessName())
                 .create()
         );
     }
@@ -72,7 +75,9 @@ public class ProcessActivity extends BaseBackActivity {
                         .appendLine("getAllBackgroundProcesses: " + getSetItems(set))
                         .appendLine("size: " + set.size())
                         .appendLine("killAllBackgroundProcesses: " + getSetItems(set1))
-                        .append("size: " + set1.size())
+                        .appendLine("size: " + set1.size())
+                        .appendLine("isMainProcess: " + ProcessUtils.isMainProcess())
+                        .append("getCurrentProcessName: " + ProcessUtils.getCurrentProcessName())
                         .create()
                 );
                 break;

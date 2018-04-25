@@ -66,8 +66,9 @@
     <string name="uninstall_successfully">Uninstall successfully</string>
     <string name="uninstall_unsuccessfully">Uninstall unsuccessfully</string>
     <string name="app_launch">Launch App</string>
+    <string name="app_relaunch">Relaunch App</string>
+    <string name="app_launch_details_settings">Launch App Details Settings</string>
     <string name="app_exit">Exit App</string>
-    <string name="app_get_details_settings">Get App Details Settings</string>
 
     <!--Bar 相关-->
     <string name="bar_about_status_bar">About Status Bar</string>
@@ -99,6 +100,7 @@
     <string name="bar_nav_show">Show Nav</string>
     <string name="bar_nav_hide">Hide Nav</string>
     <string name="bar_nav_immersive">Immersive Nav</string>
+    <string name="bar_nav_color">Set Nav Color Random</string>
 
     <!--Clean 相关-->
     <string name="clean_internal_cache">Clean Internal Cache</string>
@@ -133,6 +135,7 @@
 
     <!--Image 相关-->
     <string name="image_src">Src</string>
+    <string name="image_add_color">Add Color</string>
     <string name="image_scale">Scale</string>
     <string name="image_clip">Clip</string>
     <string name="image_skew">Skew</string>
@@ -175,6 +178,7 @@
     <string name="log_toggle_tag">Toggle Tag</string>
     <string name="log_toggle_head">Toggle Head</string>
     <string name="log_toggle_border">Toggle Border</string>
+    <string name="log_toggle_single">Toggle Single</string>
     <string name="log_toggle_console_filter">Toggle Console Filter</string>
     <string name="log_toggle_file_filter">Toggle File Filter</string>
     <string name="log_toggle_file">Toggle File</string>

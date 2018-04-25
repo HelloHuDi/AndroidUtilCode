@@ -2,13 +2,13 @@
 
 Gradle:
 ```groovy
-compile 'com.blankj:utilcode:1.12.6'
+implementation 'com.blankj:utilcode:1.14.0'
 ```
 
 
 ## How to use
 
-```
+```java
 // init it in the function of onCreate in ur Application
 Utils.init(application);
 ```
@@ -16,11 +16,7 @@ Utils.init(application);
 
 ## Proguard
 
-```
--keep class com.blankj.utilcode.** { *; }
--keepclassmembers class com.blankj.utilcode.** { *; }
--dontwarn com.blankj.utilcode.**
-```
+U needn't do anything, because I add `consumerProguardFiles 'proguard-rules.pro'` in build.gradle.
 
 
 ## APIs
@@ -44,30 +40,29 @@ finishAllActivitiesExceptNewest
 
 * ### About App -> [AppUtils.java][app.java] -> [Demo][app.demo]
 ```
-isInstallApp
 installApp
 installAppSilent
 uninstallApp
 uninstallAppSilent
+isAppInstalled
 isAppRoot
+isAppDebug
+isAppSystem
+isAppForeground
 launchApp
+relaunchApp
+launchAppDetailsSettings
 exitApp
-getAppPackageName
-getAppDetailsSettings
-getAppName
 getAppIcon
+getAppPackageName
+getAppName
 getAppPath
 getAppVersionName
 getAppVersionCode
-isSystemApp
-isAppDebug
 getAppSignature
 getAppSignatureSHA1
-isAppForeground
-getForegroundApp
 getAppInfo
 getAppsInfo
-cleanAppData
 ```
 
 * ### About Bar -> [BarUtils.java][bar.java] -> [Demo][bar.demo]
@@ -87,6 +82,8 @@ setNotificationBarVisibility
 getNavBarHeight
 setNavBarVisibility
 setNavBarImmersive
+setNavBarColor
+getNavBarColor
 isNavBarVisible
 ```
 
@@ -116,7 +113,7 @@ cleanInternalDbs
 cleanInternalDbByName
 cleanInternalSp
 cleanExternalCache
-cleanCustomCache
+cleanCustomDir
 ```
 
 * ### About Close -> [CloseUtils.java][close.java]
@@ -127,13 +124,13 @@ closeIOQuietly
 
 * ### About Convert -> [ConvertUtils.java][convert.java] -> [Test][convert.test]
 ```
+bytes2Bits, bits2Bytes
+bytes2Chars, chars2Bytes
 bytes2HexString, hexString2Bytes
-chars2Bytes, bytes2Chars
 memorySize2Byte, byte2MemorySize
 byte2FitMemorySize
 timeSpan2Millis, millis2TimeSpan
 millis2FitTimeSpan
-bytes2Bits, bits2Bytes
 input2OutputStream, output2InputStream
 inputStream2Bytes, bytes2InputStream
 outputStream2Bytes, bytes2OutputStream
@@ -161,6 +158,7 @@ getAndroidID
 getMacAddress
 getManufacturer
 getModel
+getABIs
 shutdown
 reboot
 reboot2Recovery
@@ -174,7 +172,6 @@ urlDecode
 base64Encode
 base64Encode2String
 base64Decode
-base64UrlSafeEncode
 htmlEncode
 htmlDecode
 ```
@@ -201,6 +198,8 @@ encrypt3DES, encrypt3DES2HexString, encrypt3DES2Base64
 decrypt3DES, decryptHexString3DES, decryptBase64_3DES
 encryptAES, encryptAES2HexString, encryptAES2Base64
 decryptAES, decryptHexStringAES, decryptBase64AES
+encryptRSA, encryptRSA2HexString, encryptRSA2Base64
+decryptRSA, decryptHexStringRSA, decryptBase64RSA
 ```
 
 * ### About FileIO -> [FileIOUtils.java][fileio.java] -> [Test][fileio.test]
@@ -319,7 +318,7 @@ compressBySampleSize
 getInstallAppIntent
 getUninstallAppIntent
 getLaunchAppIntent
-getAppDetailsSettingsIntent
+getLaunchAppDetailsSettingsIntent
 getShareTextIntent
 getShareImageIntent
 getComponentIntent
@@ -349,9 +348,12 @@ Config.setLog2FileSwitch
 Config.setDir
 Config.setFilePrefix
 Config.setBorderSwitch
+Config.setSingleTagSwitch
 Config.setConsoleFilter
 Config.setFileFilter
 Config.setStackDeep
+Config.setStackOffset
+log
 v
 vTag
 d
@@ -402,7 +404,7 @@ hashCode
 ```
 getPermissions
 isGranted
-openAppSettings
+launchAppDetailsSettings
 permission
 rationale
 callback
@@ -413,7 +415,9 @@ request
 * ### About Phone -> [PhoneUtils.java][phone.java] -> [Demo][phone.demo]
 ```
 isPhone
+getDeviceId
 getIMEI
+getMEID
 getIMSI
 getPhoneType
 isSimCardReady
@@ -424,9 +428,6 @@ dial
 call
 sendSms
 sendSmsSilent
-getAllContactInfo
-getContactNum
-getAllSMS
 ```
 
 * ### About Process -> [ProcessUtils.java][process.java] -> [Demo][process.demo]
@@ -434,6 +435,8 @@ getAllSMS
 getForegroundProcessName
 killAllBackgroundProcesses
 killBackgroundProcesses
+isMainProcess
+getCurrentProcessName
 ```
 
 * ### About Reflect -> [ReflectUtils.java][reflect.java] -> [Test][reflect.test]
@@ -486,13 +489,15 @@ isTablet
 
 * ### About SDCard -> [SDCardUtils.java][sdcard.java] -> [Demo][sdcard.demo]
 ```
+isSDCardEnableByEnvironment
+getSDCardPathByEnvironment
 isSDCardEnable
 getSDCardPaths
 ```
 
 * ### About Service -> [ServiceUtils.java][service.java]
 ```
-getAllRunningService
+getAllRunningServices
 startService
 stopService
 bindService
@@ -640,12 +645,18 @@ getZodiac
 setGravity
 setBgColor
 setBgResource
-setMessageColor
+setMsgColor
+setMsgTextSize
 showShort
 showLong
 showCustomShort
 showCustomLong
 cancel
+```
+
+* ### About Uri -> [UriUtils.java][uri.java]
+```
+getUriForFile
 ```
 
 * ### About Zip -> [ZipUtils.java][zip.java] -> [Test][zip.test]
@@ -764,6 +775,8 @@ getComments
 
 [toast.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ToastUtils.java
 [toast.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/toast/ToastActivity.java
+
+[uri.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/UriUtils.java
 
 [zip.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ZipUtils.java
 [zip.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/ZipUtilsTest.java

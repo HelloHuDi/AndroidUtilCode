@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,7 +39,7 @@ public class ImageActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -47,7 +49,7 @@ public class ImageActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_image));
 
         RecyclerView rvImages = findViewById(R.id.rv_images);
@@ -61,6 +63,7 @@ public class ImageActivity extends BaseBackActivity {
         int height = src.getHeight();
 
         mList.add(new ImageBean(R.string.image_src, src));
+        mList.add(new ImageBean(R.string.image_add_color, ImageUtils.drawColor(src, Color.parseColor("#8000FF00"))));
         mList.add(new ImageBean(R.string.image_scale, ImageUtils.scale(src, width / 2, height / 2)));
         mList.add(new ImageBean(R.string.image_clip, ImageUtils.clip(src, 0, 0, width / 2, height / 2)));
         mList.add(new ImageBean(R.string.image_skew, ImageUtils.skew(src, 0.2f, 0.1f)));
@@ -76,7 +79,9 @@ public class ImageActivity extends BaseBackActivity {
         mList.add(new ImageBean(R.string.image_add_image_watermark, ImageUtils.addImageWatermark(src, watermark, 0, 0, 0x88)));
         mList.add(new ImageBean(R.string.image_to_gray, ImageUtils.toGray(src)));
         mList.add(new ImageBean(R.string.image_fast_blur, ImageUtils.fastBlur(src, 0.1f, 5)));
-        mList.add(new ImageBean(R.string.image_render_script_blur, ImageUtils.renderScriptBlur(src, 10)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mList.add(new ImageBean(R.string.image_render_script_blur, ImageUtils.renderScriptBlur(src, 10)));
+        }
         mList.add(new ImageBean(R.string.image_stack_blur, ImageUtils.stackBlur(src, 10)));
         mList.add(new ImageBean(R.string.image_compress_by_scale, ImageUtils.compressByScale(src, 0.5f, 0.5f)));
         mList.add(new ImageBean(R.string.image_compress_by_quality_half, ImageUtils.compressByQuality(src, 50)));

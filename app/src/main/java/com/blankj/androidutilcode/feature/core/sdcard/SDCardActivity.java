@@ -3,6 +3,7 @@ package com.blankj.androidutilcode.feature.core.sdcard;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ public class SDCardActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -37,11 +38,13 @@ public class SDCardActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_sdcard));
 
         TextView tvAboutSdcard = findViewById(R.id.tv_about_sdcard);
         tvAboutSdcard.setText(new SpanUtils()
+                .appendLine("isSDCardEnableByEnvironment: " + SDCardUtils.isSDCardEnableByEnvironment())
+                .appendLine("getSDCardPathByEnvironment: " + SDCardUtils.getSDCardPathByEnvironment())
                 .appendLine("isSDCardEnable: " + SDCardUtils.isSDCardEnable())
                 .appendLine("getSDCardPaths: " + SDCardUtils.getSDCardPaths())
                 .appendLine("getInnerSDCardPaths: " + SDCardUtils.getSDCardPaths(true))

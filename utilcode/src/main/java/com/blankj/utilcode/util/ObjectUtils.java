@@ -1,6 +1,7 @@
 package com.blankj.utilcode.util;
 
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.SparseArray;
@@ -17,7 +18,7 @@ import java.util.Map;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2017/12/24
- *     desc  : 对象相关工具类
+ *     desc  : utils about object
  * </pre>
  */
 public final class ObjectUtils {
@@ -27,19 +28,19 @@ public final class ObjectUtils {
     }
 
     /**
-     * 判断对象是否为空
+     * Return whether object is empty.
      *
-     * @param obj 对象
-     * @return {@code true}: 为空<br>{@code false}: 不为空
+     * @param obj The object.
+     * @return {@code true}: yes<br>{@code false}: no
      */
     public static boolean isEmpty(final Object obj) {
         if (obj == null) {
             return true;
         }
-        if (obj instanceof CharSequence && obj.toString().length() == 0) {
+        if (obj.getClass().isArray() && Array.getLength(obj) == 0) {
             return true;
         }
-        if (obj.getClass().isArray() && Array.getLength(obj) == 0) {
+        if (obj instanceof CharSequence && obj.toString().length() == 0) {
             return true;
         }
         if (obj instanceof Collection && ((Collection) obj).isEmpty()) {
@@ -77,36 +78,122 @@ public final class ObjectUtils {
         return false;
     }
 
+    public static boolean isEmpty(final CharSequence obj) {
+        return obj == null || obj.toString().length() == 0;
+    }
+
+    public static boolean isEmpty(final Collection obj) {
+        return obj == null || obj.isEmpty();
+    }
+
+    public static boolean isEmpty(final Map obj) {
+        return obj == null || obj.isEmpty();
+    }
+
+    public static boolean isEmpty(final SimpleArrayMap obj) {
+        return obj == null || obj.isEmpty();
+    }
+
+    public static boolean isEmpty(final SparseArray obj) {
+        return obj == null || obj.size() == 0;
+    }
+
+    public static boolean isEmpty(final SparseBooleanArray obj) {
+        return obj == null || obj.size() == 0;
+    }
+
+    public static boolean isEmpty(final SparseIntArray obj) {
+        return obj == null || obj.size() == 0;
+    }
+
+    public static boolean isEmpty(final LongSparseArray obj) {
+        return obj == null || obj.size() == 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public static boolean isEmpty(final SparseLongArray obj) {
+        return obj == null || obj.size() == 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public static boolean isEmpty(final android.util.LongSparseArray obj) {
+        return obj == null || obj.size() == 0;
+    }
+
     /**
-     * 判断对象是否非空
+     * Return whether object is not empty.
      *
-     * @param obj 对象
-     * @return {@code true}: 非空<br>{@code false}: 空
+     * @param obj The object.
+     * @return {@code true}: yes<br>{@code false}: no
      */
     public static boolean isNotEmpty(final Object obj) {
         return !isEmpty(obj);
     }
 
+
+    public static boolean isNotEmpty(final CharSequence obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final Collection obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final Map obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final SimpleArrayMap obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final SparseArray obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final SparseBooleanArray obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final SparseIntArray obj) {
+        return !isEmpty(obj);
+    }
+
+    public static boolean isNotEmpty(final LongSparseArray obj) {
+        return !isEmpty(obj);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public static boolean isNotEmpty(final SparseLongArray obj) {
+        return !isEmpty(obj);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public static boolean isNotEmpty(final android.util.LongSparseArray obj) {
+        return !isEmpty(obj);
+    }
+
     /**
-     * 判断对象是否相等
+     * Return whether object1 is equals to object2.
      *
-     * @param o1 对象1
-     * @param o2 对象2
-     * @return {@code true}: 相等<br>{@code false}: 不相等
+     * @param o1 The first object.
+     * @param o2 The second object.
+     * @return {@code true}: yes<br>{@code false}: no
      */
-    public static boolean equals(Object o1, Object o2) {
+    public static boolean equals(final Object o1, final Object o2) {
         return o1 == o2 || (o1 != null && o1.equals(o2));
     }
 
     /**
-     * 检查对象非空
+     * Require the object is not null.
      *
-     * @param object  对象
-     * @param message 报错
-     * @param <T>     范型
-     * @return 非空对象
+     * @param object  The object.
+     * @param message The message to use with the NullPointerException.
+     * @param <T>     The value type.
+     * @return the object
+     * @throws NullPointerException if object is null
      */
-    public static <T> T requireNonNull(T object, String message) {
+    public static <T> T requireNonNull(final T object, final String message) {
         if (object == null) {
             throw new NullPointerException(message);
         }
@@ -114,14 +201,14 @@ public final class ObjectUtils {
     }
 
     /**
-     * 获取非空或默认对象
+     * Return the nonnull object or default object.
      *
-     * @param object        对象
-     * @param defaultObject 默认值
-     * @param <T>           范型
-     * @return 非空或默认对象
+     * @param object        The object.
+     * @param defaultObject The default object to use with the object is null.
+     * @param <T>           The value type.
+     * @return the nonnull object or default object
      */
-    public static <T> T getOrDefault(T object, T defaultObject) {
+    public static <T> T getOrDefault(final T object, final T defaultObject) {
         if (object == null) {
             return defaultObject;
         }
@@ -129,12 +216,12 @@ public final class ObjectUtils {
     }
 
     /**
-     * 获取对象哈希值
+     * Return the hash code of object.
      *
-     * @param o 对象
-     * @return 哈希值
+     * @param o The object.
+     * @return the hash code of object
      */
-    public static int hashCode(Object o) {
+    public static int hashCode(final Object o) {
         return o != null ? o.hashCode() : 0;
     }
 }

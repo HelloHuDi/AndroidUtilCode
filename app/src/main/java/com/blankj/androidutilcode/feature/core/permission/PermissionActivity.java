@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class PermissionActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -48,7 +49,7 @@ public class PermissionActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_permission));
 
         tvAboutPermission = findViewById(R.id.tv_about_permission);
@@ -78,7 +79,7 @@ public class PermissionActivity extends BaseBackActivity {
     public void onWidgetClick(View view) {
         switch (view.getId()) {
             case R.id.btn_open_app_settings:
-                PermissionUtils.openAppSettings();
+                PermissionUtils.launchAppDetailsSettings();
                 break;
             case R.id.btn_request_calendar:
                 PermissionUtils.permission(PermissionConstants.CALENDAR)

@@ -3,6 +3,7 @@ package com.blankj.androidutilcode.feature.sub.pinyin;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class PinyinActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -36,7 +37,7 @@ public class PinyinActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_pinyin));
 
         TextView tvAboutPinyin = findViewById(R.id.tv_about_pinyin);

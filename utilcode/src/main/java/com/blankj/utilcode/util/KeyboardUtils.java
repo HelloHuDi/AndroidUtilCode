@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/08/02
- *     desc  : 键盘相关工具类
+ *     desc  : utils about keyboard
  * </pre>
  */
 public final class KeyboardUtils {
@@ -26,16 +26,10 @@ public final class KeyboardUtils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    /*
-      避免输入法面板遮挡
-      <p>在 manifest.xml 中 activity 中设置</p>
-      <p>android:windowSoftInputMode="adjustPan"</p>
-     */
-
     /**
-     * 动态显示软键盘
+     * Show the soft input.
      *
-     * @param activity activity
+     * @param activity The activity.
      */
     public static void showSoftInput(final Activity activity) {
         InputMethodManager imm =
@@ -47,9 +41,9 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 动态显示软键盘
+     * Show the soft input.
      *
-     * @param view 视图
+     * @param view The view.
      */
     public static void showSoftInput(final View view) {
         InputMethodManager imm =
@@ -62,9 +56,9 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 动态隐藏软键盘
+     * Hide the soft input.
      *
-     * @param activity activity
+     * @param activity The activity.
      */
     public static void hideSoftInput(final Activity activity) {
         InputMethodManager imm =
@@ -76,9 +70,9 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 动态隐藏软键盘
+     * Hide the soft input.
      *
-     * @param view 视图
+     * @param view The view.
      */
     public static void hideSoftInput(final View view) {
         InputMethodManager imm =
@@ -88,7 +82,7 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 切换软键盘显示与否状态
+     * Toggle the soft input display or not.
      */
     public static void toggleSoftInput() {
         InputMethodManager imm =
@@ -98,22 +92,22 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 判断软键盘是否可见
-     * <p>默认软键盘最小高度为 200</p>
+     * Return whether soft input is visible.
+     * <p>The minimum height is 200</p>
      *
-     * @param activity activity
-     * @return {@code true}: 可见<br>{@code false}: 不可见
+     * @param activity The activity.
+     * @return {@code true}: yes<br>{@code false}: no
      */
     public static boolean isSoftInputVisible(final Activity activity) {
         return isSoftInputVisible(activity, 200);
     }
 
     /**
-     * 判断软键盘是否可见
+     * Return whether soft input is visible.
      *
-     * @param activity             activity
-     * @param minHeightOfSoftInput 软键盘最小高度
-     * @return {@code true}: 可见<br>{@code false}: 不可见
+     * @param activity             The activity.
+     * @param minHeightOfSoftInput The minimum height of soft input.
+     * @return {@code true}: yes<br>{@code false}: no
      */
     public static boolean isSoftInputVisible(final Activity activity,
                                              final int minHeightOfSoftInput) {
@@ -122,16 +116,16 @@ public final class KeyboardUtils {
 
     private static int getContentViewInvisibleHeight(final Activity activity) {
         final View contentView = activity.findViewById(android.R.id.content);
-        Rect r = new Rect();
-        contentView.getWindowVisibleDisplayFrame(r);
-        return contentView.getRootView().getHeight() - r.height();
+        Rect outRect = new Rect();
+        contentView.getWindowVisibleDisplayFrame(outRect);
+        return contentView.getBottom() - outRect.bottom;
     }
 
     /**
-     * 注册软键盘改变监听器
+     * Register soft input changed listener.
      *
-     * @param activity activity
-     * @param listener listener
+     * @param activity The activity.
+     * @param listener The soft input changed listener.
      */
     public static void registerSoftInputChangedListener(final Activity activity,
                                                         final OnSoftInputChangedListener listener) {
@@ -152,10 +146,10 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 修复软键盘内存泄漏
-     * <p>在{@link Activity#onDestroy()}中使用</p>
+     * Fix the leaks of soft input.
+     * <p>Call the function in {@link Activity#onDestroy()}.</p>
      *
-     * @param context context
+     * @param context The context.
      */
     public static void fixSoftInputLeaks(final Context context) {
         if (context == null) return;
@@ -185,10 +179,8 @@ public final class KeyboardUtils {
     }
 
     /**
-     * 点击屏幕空白区域隐藏软键盘
-     * <p>根据 EditText 所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘</p>
-     * <p>需重写 dispatchTouchEvent</p>
-     * <p>参照以下注释代码</p>
+     * Click blankj area to hide soft input.
+     * <p>Copy the following code in ur activity.</p>
      */
     public static void clickBlankArea2HideSoftInput() {
         Log.i("KeyboardUtils", "Please refer to the following code.");
@@ -208,7 +200,7 @@ public final class KeyboardUtils {
             return super.dispatchTouchEvent(ev);
         }
 
-        // 根据 EditText 所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘
+        // Return whether touch the view.
         private boolean isShouldHideKeyboard(View v, MotionEvent event) {
             if (v != null && (v instanceof EditText)) {
                 int[] l = {0, 0};

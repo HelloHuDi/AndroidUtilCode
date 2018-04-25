@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.RequiresPermission;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -18,12 +19,17 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
+import static android.Manifest.permission.ACCESS_WIFI_STATE;
+import static android.Manifest.permission.INTERNET;
+import static android.Manifest.permission.MODIFY_PHONE_STATE;
+
 /**
  * <pre>
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/08/02
- *     desc  : 网络相关工具类
+ *     desc  : utils about network
  * </pre>
  */
 public final class NetworkUtils {
@@ -42,65 +48,51 @@ public final class NetworkUtils {
     }
 
     /**
-     * 打开网络设置界面
+     * Open the settings of wireless.
      */
     public static void openWirelessSettings() {
         Utils.getApp().startActivity(
                 new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         );
     }
 
     /**
-     * 获取活动网络信息
-     * <p>需添加权限
+     * Return whether network is connected.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
      *
-     * @return NetworkInfo
+     * @return {@code true}: connected<br>{@code false}: disconnected
      */
-    @SuppressLint("MissingPermission")
-    private static NetworkInfo getActiveNetworkInfo() {
-        ConnectivityManager manager =
-                (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager == null) return null;
-        return manager.getActiveNetworkInfo();
-    }
-
-    /**
-     * 判断网络是否连接
-     * <p>需添加权限
-     * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
-     *
-     * @return {@code true}: 是<br>{@code false}: 否
-     */
+    @RequiresPermission(ACCESS_NETWORK_STATE)
     public static boolean isConnected() {
         NetworkInfo info = getActiveNetworkInfo();
         return info != null && info.isConnected();
     }
 
     /**
-     * 判断网络是否可用
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
-     * <p>需要异步 ping，如果 ping 不通就说明网络不可用</p>
-     * <p>ping 的 ip 为阿里巴巴公共 ip：223.5.5.5</p>
+     * Return whether network is available using ping.
+     * <p>Must hold {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
+     * <p>The default ping ip: 223.5.5.5</p>
      *
-     * @return {@code true}: 可用<br>{@code false}: 不可用
+     * @return {@code true}: yes<br>{@code false}: no
      */
+    @RequiresPermission(INTERNET)
     public static boolean isAvailableByPing() {
         return isAvailableByPing(null);
     }
 
     /**
-     * 判断网络是否可用
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
-     * <p>需要异步 ping，如果 ping 不通就说明网络不可用</p>
+     * Return whether network is available using ping.
+     * <p>Must hold {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
      *
-     * @param ip ip 地址（自己服务器 ip），如果为空，ip 为阿里巴巴公共 ip
-     * @return {@code true}: 可用<br>{@code false}: 不可用
+     * @param ip The ip address.
+     * @return {@code true}: yes<br>{@code false}: no
      */
+    @RequiresPermission(INTERNET)
     public static boolean isAvailableByPing(String ip) {
         if (ip == null || ip.length() <= 0) {
-            ip = "223.5.5.5";// 阿里巴巴公共 ip
+            ip = "223.5.5.5";// default ping ip
         }
         CommandResult result = ShellUtils.execCmd(String.format("ping -c 1 %s", ip), false);
         boolean ret = result.result == 0;
@@ -114,9 +106,9 @@ public final class NetworkUtils {
     }
 
     /**
-     * 判断移动数据是否打开
+     * Return whether mobile data is enabled.
      *
-     * @return {@code true}: 是<br>{@code false}: 否
+     * @return {@code true}: enabled<br>{@code false}: disabled
      */
     public static boolean getMobileDataEnabled() {
         try {
@@ -135,12 +127,13 @@ public final class NetworkUtils {
     }
 
     /**
-     * 打开或关闭移动数据
-     * <p>需系统应用 需添加权限
+     * Set mobile data enabled.
+     * <p>Must hold {@code android:sharedUserId="android.uid.system"},
      * {@code <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />}</p>
      *
-     * @param enabled {@code true}: 打开<br>{@code false}: 关闭
+     * @param enabled True to enabled, false otherwise.
      */
+    @RequiresPermission(MODIFY_PHONE_STATE)
     public static void setMobileDataEnabled(final boolean enabled) {
         try {
             TelephonyManager tm =
@@ -157,13 +150,13 @@ public final class NetworkUtils {
     }
 
     /**
-     * 判断网络是否是移动数据
-     * <p>需添加权限
+     * Return whether using mobile data.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
      *
-     * @return {@code true}: 是<br>{@code false}: 否
+     * @return {@code true}: yes<br>{@code false}: no
      */
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(ACCESS_NETWORK_STATE)
     public static boolean isMobileData() {
         NetworkInfo info = getActiveNetworkInfo();
         return null != info
@@ -172,12 +165,13 @@ public final class NetworkUtils {
     }
 
     /**
-     * 判断网络是否是 4G
-     * <p>需添加权限
+     * Return whether using 4G.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
      *
-     * @return {@code true}: 是<br>{@code false}: 否
+     * @return {@code true}: yes<br>{@code false}: no
      */
+    @RequiresPermission(ACCESS_NETWORK_STATE)
     public static boolean is4G() {
         NetworkInfo info = getActiveNetworkInfo();
         return info != null
@@ -186,12 +180,13 @@ public final class NetworkUtils {
     }
 
     /**
-     * 判断 wifi 是否打开
-     * <p>需添加权限
+     * Return whether wifi is enabled.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />}</p>
      *
-     * @return {@code true}: 是<br>{@code false}: 否
+     * @return {@code true}: enabled<br>{@code false}: disabled
      */
+    @RequiresPermission(ACCESS_WIFI_STATE)
     public static boolean getWifiEnabled() {
         @SuppressLint("WifiManagerLeak")
         WifiManager manager = (WifiManager) Utils.getApp().getSystemService(Context.WIFI_SERVICE);
@@ -199,11 +194,11 @@ public final class NetworkUtils {
     }
 
     /**
-     * 打开或关闭 wifi
-     * <p>需添加权限
+     * Set wifi enabled.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />}</p>
      *
-     * @param enabled {@code true}: 打开<br>{@code false}: 关闭
+     * @param enabled True to enabled, false otherwise.
      */
     @SuppressLint("MissingPermission")
     public static void setWifiEnabled(final boolean enabled) {
@@ -222,11 +217,11 @@ public final class NetworkUtils {
     }
 
     /**
-     * 判断 wifi 是否连接状态
-     * <p>需添加权限
+     * Return whether wifi is connected.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
      *
-     * @return {@code true}: 连接<br>{@code false}: 未连接
+     * @return {@code true}: connected<br>{@code false}: disconnected
      */
     @SuppressLint("MissingPermission")
     public static boolean isWifiConnected() {
@@ -238,23 +233,22 @@ public final class NetworkUtils {
     }
 
     /**
-     * 判断 wifi 数据是否可用
-     * <p>需添加权限
-     * {@code <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />}</p>
-     * <p>需添加权限
+     * Return whether wifi is available.
+     * <p>Must hold
+     * {@code <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />},
      * {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
      *
-     * @return {@code true}: 是<br>{@code false}: 否
+     * @return {@code true}: available<br>{@code false}: unavailable
      */
+    @RequiresPermission(allOf = {ACCESS_WIFI_STATE, INTERNET})
     public static boolean isWifiAvailable() {
         return getWifiEnabled() && isAvailableByPing();
     }
 
     /**
-     * 获取网络运营商名称
-     * <p>中国移动、如中国联通、中国电信</p>
+     * Return the name of network operate.
      *
-     * @return 运营商名称
+     * @return the name of network operate
      */
     public static String getNetworkOperatorName() {
         TelephonyManager tm =
@@ -267,11 +261,11 @@ public final class NetworkUtils {
     private static final int NETWORK_TYPE_IWLAN    = 18;
 
     /**
-     * 获取当前网络类型
-     * <p>需添加权限
+     * Return type of network.
+     * <p>Must hold
      * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
      *
-     * @return 网络类型
+     * @return type of network
      * <ul>
      * <li>{@link NetworkUtils.NetworkType#NETWORK_WIFI   } </li>
      * <li>{@link NetworkUtils.NetworkType#NETWORK_4G     } </li>
@@ -281,6 +275,7 @@ public final class NetworkUtils {
      * <li>{@link NetworkUtils.NetworkType#NETWORK_NO     } </li>
      * </ul>
      */
+    @RequiresPermission(ACCESS_NETWORK_STATE)
     public static NetworkType getNetworkType() {
         NetworkType netType = NetworkType.NETWORK_NO;
         NetworkInfo info = getActiveNetworkInfo();
@@ -336,19 +331,28 @@ public final class NetworkUtils {
         return netType;
     }
 
+    @RequiresPermission(ACCESS_NETWORK_STATE)
+    private static NetworkInfo getActiveNetworkInfo() {
+        ConnectivityManager manager =
+                (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager == null) return null;
+        return manager.getActiveNetworkInfo();
+    }
+
     /**
-     * 获取 IP 地址
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
+     * Return the ip address.
+     * <p>Must hold {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
      *
-     * @param useIPv4 是否用 IPv4
-     * @return IP 地址
+     * @param useIPv4 True to use ipv4, false otherwise.
+     * @return the ip address
      */
+    @RequiresPermission(INTERNET)
     public static String getIPAddress(final boolean useIPv4) {
         try {
-            for (Enumeration<NetworkInterface> nis =
-                 NetworkInterface.getNetworkInterfaces(); nis.hasMoreElements(); ) {
+            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+            while (nis.hasMoreElements()) {
                 NetworkInterface ni = nis.nextElement();
-                // 防止小米手机返回 10.0.2.15
+                // To prevent phone of xiaomi return "10.0.2.15"
                 if (!ni.isUp()) continue;
                 Enumeration<InetAddress> addresses = ni.getInetAddresses();
                 while (addresses.hasMoreElements()) {
@@ -376,12 +380,13 @@ public final class NetworkUtils {
     }
 
     /**
-     * 获取域名 ip 地址
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
+     * Return the domain address.
+     * <p>Must hold {@code <uses-permission android:name="android.permission.INTERNET" />}</p>
      *
-     * @param domain 域名
-     * @return ip 地址
+     * @param domain The name of domain.
+     * @return the domain address
      */
+    @RequiresPermission(INTERNET)
     public static String getDomainAddress(final String domain) {
         InetAddress inetAddress;
         try {

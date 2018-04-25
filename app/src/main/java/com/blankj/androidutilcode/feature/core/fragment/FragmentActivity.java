@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
@@ -40,7 +41,7 @@ public class FragmentActivity extends BaseActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -50,7 +51,7 @@ public class FragmentActivity extends BaseActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         if (savedInstanceState != null) {
             curIndex = savedInstanceState.getInt("curIndex");
         }

@@ -3,6 +3,7 @@ package com.blankj.androidutilcode.feature.core.device;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,8 @@ import com.blankj.androidutilcode.R;
 import com.blankj.androidutilcode.base.BaseBackActivity;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SpanUtils;
+
+import java.util.Arrays;
 
 /**
  * <pre>
@@ -27,7 +30,7 @@ public class DeviceActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -37,7 +40,7 @@ public class DeviceActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_device));
 
         findViewById(R.id.btn_shutdown).setOnClickListener(this);
@@ -52,7 +55,8 @@ public class DeviceActivity extends BaseBackActivity {
                 .appendLine("getAndroidID: " + DeviceUtils.getAndroidID())
                 .appendLine("getMacAddress: " + DeviceUtils.getMacAddress())
                 .appendLine("getManufacturer: " + DeviceUtils.getManufacturer())
-                .append("getModel: " + DeviceUtils.getModel())
+                .appendLine("getModel: " + DeviceUtils.getModel())
+                .append("getABIs: " + Arrays.asList(DeviceUtils.getABIs()))
                 .create()
         );
     }

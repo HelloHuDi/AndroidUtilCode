@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.Window;
@@ -13,10 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.androidutilcode.Config;
+import com.blankj.androidutilcode.MainActivity;
 import com.blankj.androidutilcode.R;
 import com.blankj.androidutilcode.base.BaseBackActivity;
 import com.blankj.androidutilcode.feature.core.CoreUtilActivity;
-import com.blankj.androidutilcode.MainActivity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SpanUtils;
@@ -45,7 +46,7 @@ public class ActivityActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -59,7 +60,7 @@ public class ActivityActivity extends BaseBackActivity {
 
 
     @Override
-    public void initView(Bundle savedInstanceState, View view) {
+    public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_activity));
         viewSharedElement = findViewById(R.id.view_shared_element);
         findViewById(R.id.btn_clz).setOnClickListener(this);
@@ -93,11 +94,10 @@ public class ActivityActivity extends BaseBackActivity {
         findViewById(R.id.btn_finish_all_activities).setOnClickListener(this);
         TextView tvAboutActivity = findViewById(R.id.tv_about_activity);
         tvAboutActivity.setText(new SpanUtils()
-                .appendLine("Is SubActivityActivity Exists: " + ActivityUtils.isActivityExists(Config.PKG, SubActivityActivity.class.getName()))
+                .appendLine("isActivityExists: " + ActivityUtils.isActivityExists(Config.PKG, SubActivityActivity.class.getName()))
                 .appendLine("getLauncherActivity: " + ActivityUtils.getLauncherActivity(Config.PKG))
                 .appendLine("getTopActivity: " + ActivityUtils.getTopActivity())
-                .appendLine("getTopActivity: " + ActivityUtils.getTopActivity())
-                .appendLine("Is CoreUtilActivity Exists In Stack: " + ActivityUtils.isActivityExistsInStack(CoreUtilActivity.class))
+                .appendLine("isActivityExistsInStack: " + ActivityUtils.isActivityExistsInStack(CoreUtilActivity.class))
                 .append("getActivityIcon: ")
                 .appendImage(ActivityUtils.getActivityIcon(ActivityActivity.class), SpanUtils.ALIGN_CENTER)
                 .appendLine()
