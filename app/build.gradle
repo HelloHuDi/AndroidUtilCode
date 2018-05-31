@@ -36,9 +36,8 @@ android {
     }
 
     sourceSets {
-        main {
-            res.srcDirs('src/main/res', 'src/main/res_core', 'src/main/res_sub')
-        }
+        main.res.srcDirs += 'src/main/res_core'
+        main.res.srcDirs += 'src/main/res_sub'
     }
 
     lintOptions {
@@ -55,9 +54,8 @@ dependencies {
     implementation "com.android.support:design:$support_version"
     implementation 'com.r0adkll:slidableactivity:2.0.5'
     // LeakCanary
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
-//    implementation 'com.blankj:utilcode:1.14.0'
+//    implementation 'com.blankj:utilcode:1.16.3'
 }
-
-

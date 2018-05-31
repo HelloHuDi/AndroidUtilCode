@@ -2,7 +2,7 @@
 
 Gradle:
 ```groovy
-implementation 'com.blankj:utilcode:1.14.0'
+implementation 'com.blankj:utilcode:1.16.3'
 ```
 
 
@@ -25,6 +25,7 @@ U needn't do anything, because I add `consumerProguardFiles 'proguard-rules.pro'
 ```
 isActivityExists               : 判断 Activity 是否存在
 startActivity                  : 启动 Activity
+startActivityForResult         : 启动 Activity 为返回结果
 startActivities                : 启动多个 Activity
 startHomeActivity              : 回到桌面
 getActivityList                : 获取 Activity 栈链表
@@ -40,29 +41,31 @@ finishAllActivitiesExceptNewest: 结束除最新之外的所有 Activity
 
 * ### App 相关 -> [AppUtils.java][app.java] -> [Demo][app.demo]
 ```
-installApp              : 安装 App（支持 8.0）
-installAppSilent        : 静默安装 App
-uninstallApp            : 卸载 App
-uninstallAppSilent      : 静默卸载 App
-isAppInstalled          : 判断 App 是否安装
-isAppRoot               : 判断 App 是否有 root 权限
-isAppDebug              : 判断 App 是否是 Debug 版本
-isAppSystem             : 判断 App 是否是系统应用
-isAppForeground         : 判断 App 是否处于前台
-launchApp               : 打开 App
-relaunchApp             : 重启 App
-launchAppDetailsSettings: 打开 App 具体设置
-exitApp                 : 关闭应用
-getAppIcon              : 获取 App 图标
-getAppPackageName       : 获取 App 包名
-getAppName              : 获取 App 名称
-getAppPath              : 获取 App 路径
-getAppVersionName       : 获取 App 版本号
-getAppVersionCode       : 获取 App 版本码
-getAppSignature         : 获取 App 签名
-getAppSignatureSHA1     : 获取应用签名的的 SHA1 值
-getAppInfo              : 获取 App 信息
-getAppsInfo             : 获取所有已安装 App 信息
+registerAppStatusChangedListener  : 注册 App 前后台切换监听器
+unregisterAppStatusChangedListener: 注销 App 前后台切换监听器
+installApp                        : 安装 App（支持 8.0）
+installAppSilent                  : 静默安装 App
+uninstallApp                      : 卸载 App
+uninstallAppSilent                : 静默卸载 App
+isAppInstalled                    : 判断 App 是否安装
+isAppRoot                         : 判断 App 是否有 root 权限
+isAppDebug                        : 判断 App 是否是 Debug 版本
+isAppSystem                       : 判断 App 是否是系统应用
+isAppForeground                   : 判断 App 是否处于前台
+launchApp                         : 打开 App
+relaunchApp                       : 重启 App
+launchAppDetailsSettings          : 打开 App 具体设置
+exitApp                           : 关闭应用
+getAppIcon                        : 获取 App 图标
+getAppPackageName                 : 获取 App 包名
+getAppName                        : 获取 App 名称
+getAppPath                        : 获取 App 路径
+getAppVersionName                 : 获取 App 版本号
+getAppVersionCode                 : 获取 App 版本码
+getAppSignature                   : 获取 App 签名
+getAppSignatureSHA1               : 获取应用签名的的 SHA1 值
+getAppInfo                        : 获取 App 信息
+getAppsInfo                       : 获取所有已安装 App 信息
 ```
 
 * ### 栏相关 -> [BarUtils.java][bar.java] -> [Demo][bar.demo]
@@ -89,20 +92,20 @@ isNavBarVisible                      : 判断导航栏是否可见
 
 * ### 缓存相关 -> [CacheUtils.java][cache.java] -> [Test][cache.test]
 ```
-getInstance    : 获取缓存实例
-put            : 缓存中写入数据
-getBytes       : 缓存中读取字节数组
-getString      : 缓存中读取 String
-getJSONObject  : 缓存中读取 JSONObject
-getJSONArray   : 缓存中读取 JSONArray
-getBitmap      : 缓存中读取 Bitmap
-getDrawable    : 缓存中读取 Drawable
-getParcelable  : 缓存中读取 Parcelable
-getSerializable: 缓存中读取 Serializable
-getCacheSize   : 获取缓存大小
-getCacheCount  : 获取缓存个数
-remove         : 根据键值移除缓存
-clear          : 清除所有缓存
+getInstance             : 获取缓存实例
+Instance.put            : 缓存中写入数据
+Instance.getBytes       : 缓存中读取字节数组
+Instance.getString      : 缓存中读取 String
+Instance.getJSONObject  : 缓存中读取 JSONObject
+Instance.getJSONArray   : 缓存中读取 JSONArray
+Instance.getBitmap      : 缓存中读取 Bitmap
+Instance.getDrawable    : 缓存中读取 Drawable
+Instance.getParcelable  : 缓存中读取 Parcelable
+Instance.getSerializable: 缓存中读取 Serializable
+Instance.getCacheSize   : 获取缓存大小
+Instance.getCacheCount  : 获取缓存个数
+Instance.remove         : 根据键值移除缓存
+Instance.clear          : 清除所有缓存
 ```
 
 * ### 清除相关 -> [CleanUtils.java][clean.java] -> [Demo][clean.demo]
@@ -328,13 +331,14 @@ getCaptureIntent                 : 获取拍照的意图
 
 * ### 键盘相关 -> [KeyboardUtils.java][keyboard.java] -> [Demo][keyboard.demo]
 ```
-showSoftInput                   : 动态显示软键盘
-hideSoftInput                   : 动态隐藏软键盘
-toggleSoftInput                 : 切换键盘显示与否状态
-isSoftInputVisible              : 判断软键盘是否可见
-registerSoftInputChangedListener: 注册软键盘改变监听器
-fixSoftInputLeaks               : 修复软键盘内存泄漏
-clickBlankArea2HideSoftInput    : 点击屏幕空白区域隐藏软键盘
+showSoftInput                     : 动态显示软键盘
+hideSoftInput                     : 动态隐藏软键盘
+toggleSoftInput                   : 切换键盘显示与否状态
+isSoftInputVisible                : 判断软键盘是否可见
+registerSoftInputChangedListener  : 注册软键盘改变监听器
+unregisterSoftInputChangedListener: 注销软键盘改变监听器
+fixSoftInputLeaks                 : 修复软键盘内存泄漏
+clickBlankArea2HideSoftInput      : 点击屏幕空白区域隐藏软键盘
 ```
 
 * ### 日志相关 -> [LogUtils.java][log.java] -> [Demo][log.demo]
@@ -468,6 +472,16 @@ getReplaceFirst: 替换正则匹配的第一部分
 getReplaceAll  : 替换所有正则匹配的部分
 ```
 
+* ### 资源相关 -> [ResourceUtils.java][resource.java] -> [Demo][resource.demo]
+```
+copyFileFromAssets: 从 assets 中拷贝文件
+readAssets2String : 从 assets 中读取字符串
+readAssets2List   : 从 assets 中按行读取字符串
+copyFileFromRaw   : 从 raw 中拷贝文件
+readRaw2String    : 从 raw 中读取字符串
+readRaw2List      : 从 raw 中按行读取字符串
+```
+
 * ### 屏幕相关 -> [ScreenUtils.java][screen.java] -> [Demo][screen.demo]
 ```
 getScreenWidth     : 获取屏幕的宽度（单位：px）
@@ -578,17 +592,17 @@ create            : 创建样式字符串
 
 * ### SP 相关 -> [SPUtils.java][sp.java] -> [Demo][sp.demo]
 ```
-getInstance: 获取 SP 实例
-put        : SP 中写入数据
-getString  : SP 中读取 String
-getInt     : SP 中读取 int
-getLong    : SP 中读取 long
-getFloat   : SP 中读取 float
-getBoolean : SP 中读取 boolean
-getAll     : SP 中获取所有键值对
-contains   : SP 中是否存在该 key
-remove     : SP 中移除该 key
-clear      : SP 中清除所有数据
+getInstance        : 获取 SP 实例
+Instance.put       : SP 中写入数据
+Instance.getString : SP 中读取 String
+Instance.getInt    : SP 中读取 int
+Instance.getLong   : SP 中读取 long
+Instance.getFloat  : SP 中读取 float
+Instance.getBoolean: SP 中读取 boolean
+Instance.getAll    : SP 中获取所有键值对
+Instance.contains  : SP 中是否存在该 key
+Instance.remove    : SP 中移除该 key
+Instance.clear     : SP 中清除所有数据
 ```
 
 * ### 字符串相关 -> [StringUtils.java][string.java] -> [Test][string.test]
@@ -605,6 +619,35 @@ lowerFirstLetter: 首字母小写
 reverse         : 反转字符串
 toDBC           : 转化为半角字符
 toSBC           : 转化为全角字符
+```
+
+* ### 线程相关 -> [ThreadUtils.java][thread.java] -> [Test][thread.test]
+```
+isMainThread            : 判断当前是否主线程
+getFixedPool            : 获取固定线程池
+getSinglePool           : 获取单线程池
+getCachedPool           : 获取缓冲线程池
+getIoPool               : 获取 IO 线程池
+getCpuPool              : 获取 CPU 线程池
+executeByFixed          : 在固定线程池执行任务
+executeByFixedWithDelay : 在固定线程池延时执行任务
+executeByFixedAtFixRate : 在固定线程池按固定频率执行任务
+executeBySingle         : 在单线程池执行任务
+executeBySingleWithDelay: 在单线程池延时执行任务
+executeBySingleAtFixRate: 在单线程池按固定频率执行任务
+executeByCached         : 在缓冲线程池执行任务
+executeByCachedWithDelay: 在缓冲线程池延时执行任务
+executeByCachedAtFixRate: 在缓冲线程池按固定频率执行任务
+executeByIo             : 在 IO 线程池执行任务
+executeByIoWithDelay    : 在 IO 线程池延时执行任务
+executeByIoAtFixRate    : 在 IO 线程池按固定频率执行任务
+executeByCpu            : 在 CPU 线程池执行任务
+executeByCpuWithDelay   : 在 CPU 线程池延时执行任务
+executeByCpuAtFixRate   : 在 CPU 线程池按固定频率执行任务
+executeByCustom         : 在自定义线程池执行任务
+executeByCustomWithDelay: 在自定义线程池延时执行任务
+executeByCustomAtFixRate: 在自定义线程池按固定频率执行任务
+cancel                  : 取消任务的执行
 ```
 
 * ### 时间相关 -> [TimeUtils.java][time.java] -> [Test][time.test]
@@ -633,9 +676,7 @@ isToday                 : 判断是否今天
 isLeapYear              : 判断是否闰年
 getChineseWeek          : 获取中式星期
 getUSWeek               : 获取美式式星期
-getWeekIndex            : 获取星期索引
-getWeekOfMonth          : 获取月份中的第几周
-getWeekOfYear           : 获取年份中的第几周
+getValueByCalendarField : 根据日历字段获取值
 getChineseZodiac        : 获取生肖
 getZodiac               : 获取星座
 ```
@@ -746,6 +787,9 @@ getComments       : 获取压缩文件中的注释链表
 [regex.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/RegexUtils.java
 [regex.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/RegexUtilsTest.java
 
+[resource.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ResourceUtils.java
+[resource.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/resource/ResourceActivity.java
+
 [screen.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ScreenUtils.java
 [screen.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/screen/ScreenActivity.java
 
@@ -769,6 +813,9 @@ getComments       : 获取压缩文件中的注释链表
 
 [string.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/StringUtils.java
 [string.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/StringUtilsTest.java
+
+[thread.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ThreadUtils.java
+[thread.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/ThreadUtilsTest.java
 
 [time.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/TimeUtils.java
 [time.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/TimeUtilsTest.java

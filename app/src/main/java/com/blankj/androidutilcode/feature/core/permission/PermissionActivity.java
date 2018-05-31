@@ -25,7 +25,7 @@ import java.util.List;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2018/01/01
- *     desc  : Permission 工具类 Demo
+ *     desc  : demo about PermissionUtils
  * </pre>
  */
 public class PermissionActivity extends BaseBackActivity {
@@ -82,7 +82,7 @@ public class PermissionActivity extends BaseBackActivity {
                 PermissionUtils.launchAppDetailsSettings();
                 break;
             case R.id.btn_request_calendar:
-                PermissionUtils.permission(PermissionConstants.CALENDAR)
+                PermissionUtils.permission(PermissionConstants.PHONE, PermissionConstants.STORAGE)
                         .rationale(new PermissionUtils.OnRationaleListener() {
                             @Override
                             public void rationale(final ShouldRequest shouldRequest) {

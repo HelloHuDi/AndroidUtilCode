@@ -1,5 +1,7 @@
 package com.blankj.utilcode.util;
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -70,7 +72,7 @@ public final class ZipUtils {
         } finally {
             if (zos != null) {
                 zos.finish();
-                CloseUtils.closeIO(zos);
+                zos.close();
             }
         }
     }
@@ -112,7 +114,7 @@ public final class ZipUtils {
         } finally {
             if (zos != null) {
                 zos.finish();
-                CloseUtils.closeIO(zos);
+                zos.close();
             }
         }
     }
@@ -181,7 +183,7 @@ public final class ZipUtils {
             return zipFile(srcFile, "", zos, comment);
         } finally {
             if (zos != null) {
-                CloseUtils.closeIO(zos);
+                zos.close();
             }
         }
     }
@@ -218,7 +220,9 @@ public final class ZipUtils {
                 }
                 zos.closeEntry();
             } finally {
-                CloseUtils.closeIO(is);
+                if (is != null) {
+                    is.close();
+                }
             }
         }
         return true;
@@ -289,12 +293,20 @@ public final class ZipUtils {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = ((ZipEntry) entries.nextElement());
                 String entryName = entry.getName();
+                if (entryName.contains("../")) {
+                    Log.e("ZipUtils", "it's dangerous!");
+                    return files;
+                }
                 if (!unzipChildFile(destDir, files, zf, entry, entryName)) return files;
             }
         } else {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = ((ZipEntry) entries.nextElement());
                 String entryName = entry.getName();
+                if (entryName.contains("../")) {
+                    Log.e("ZipUtils", "it's dangerous!");
+                    return files;
+                }
                 if (entryName.contains(keyword)) {
                     if (!unzipChildFile(destDir, files, zf, entry, entryName)) return files;
                 }
@@ -326,7 +338,12 @@ public final class ZipUtils {
                     out.write(buffer, 0, len);
                 }
             } finally {
-                CloseUtils.closeIO(in, out);
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
             }
         }
         return true;

@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -29,13 +31,11 @@ import java.util.List;
  */
 public final class FileIOUtils {
 
+    private static int sBufferSize = 8192;
+
     private FileIOUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
-
-    private static final String LINE_SEP = System.getProperty("line.separator");
-
-    private static int sBufferSize = 8192;
 
     /**
      * Write file from input stream.
@@ -98,7 +98,18 @@ public final class FileIOUtils {
             e.printStackTrace();
             return false;
         } finally {
-            CloseUtils.closeIO(is, os);
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -159,7 +170,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return false;
         } finally {
-            CloseUtils.closeIO(bos);
+            try {
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -232,7 +249,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return false;
         } finally {
-            CloseUtils.closeIO(fc);
+            try {
+                if (fc != null) {
+                    fc.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -305,7 +328,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return false;
         } finally {
-            CloseUtils.closeIO(fc);
+            try {
+                if (fc != null) {
+                    fc.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -367,7 +396,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return false;
         } finally {
-            CloseUtils.closeIO(bw);
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -494,7 +529,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return null;
         } finally {
-            CloseUtils.closeIO(reader);
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -537,30 +578,17 @@ public final class FileIOUtils {
      * @return the string in file
      */
     public static String readFile2String(final File file, final String charsetName) {
-        if (!isFileExists(file)) return null;
-        BufferedReader reader = null;
-        try {
-            StringBuilder sb = new StringBuilder();
-            if (isSpace(charsetName)) {
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            } else {
-                reader = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(file), charsetName)
-                );
+        byte[] bytes = readFile2BytesByStream(file);
+        if (bytes == null) return null;
+        if (isSpace(charsetName)) {
+            return new String(bytes);
+        } else {
+            try {
+                return new String(bytes, charsetName);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                return "";
             }
-            String line;
-            if ((line = reader.readLine()) != null) {
-                sb.append(line);
-                while ((line = reader.readLine()) != null) {
-                    sb.append(LINE_SEP).append(line);
-                }
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            CloseUtils.closeIO(reader);
         }
     }
 
@@ -582,22 +610,11 @@ public final class FileIOUtils {
      */
     public static byte[] readFile2BytesByStream(final File file) {
         if (!isFileExists(file)) return null;
-        FileInputStream fis = null;
-        ByteArrayOutputStream os = null;
         try {
-            fis = new FileInputStream(file);
-            os = new ByteArrayOutputStream();
-            byte[] b = new byte[sBufferSize];
-            int len;
-            while ((len = fis.read(b, 0, sBufferSize)) != -1) {
-                os.write(b, 0, len);
-            }
-            return os.toByteArray();
-        } catch (IOException e) {
+            return is2Bytes(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
-        } finally {
-            CloseUtils.closeIO(fis, os);
         }
     }
 
@@ -631,7 +648,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return null;
         } finally {
-            CloseUtils.closeIO(fc);
+            try {
+                if (fc != null) {
+                    fc.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -665,7 +688,13 @@ public final class FileIOUtils {
             e.printStackTrace();
             return null;
         } finally {
-            CloseUtils.closeIO(fc);
+            try {
+                if (fc != null) {
+                    fc.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -715,5 +744,35 @@ public final class FileIOUtils {
             }
         }
         return true;
+    }
+
+    private static byte[] is2Bytes(final InputStream is) {
+        if (is == null) return null;
+        ByteArrayOutputStream os = null;
+        try {
+            os = new ByteArrayOutputStream();
+            byte[] b = new byte[sBufferSize];
+            int len;
+            while ((len = is.read(b, 0, sBufferSize)) != -1) {
+                os.write(b, 0, len);
+            }
+            return os.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

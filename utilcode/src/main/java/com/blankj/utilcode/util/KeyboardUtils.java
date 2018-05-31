@@ -1,11 +1,14 @@
 package com.blankj.utilcode.util;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.lang.reflect.Field;
@@ -20,7 +23,9 @@ import java.lang.reflect.Field;
  */
 public final class KeyboardUtils {
 
-    private static int sContentViewInvisibleHeightPre;
+    private static int                        sContentViewInvisibleHeightPre;
+    private static OnGlobalLayoutListener     onGlobalLayoutListener;
+    private static OnSoftInputChangedListener onSoftInputChangedListener;
 
     private KeyboardUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -36,7 +41,12 @@ public final class KeyboardUtils {
                 (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (imm == null) return;
         View view = activity.getCurrentFocus();
-        if (view == null) view = new View(activity);
+        if (view == null) {
+            view = new View(activity);
+            view.setFocusable(true);
+            view.setFocusableInTouchMode(true);
+            view.requestFocus();
+        }
         imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
@@ -116,8 +126,9 @@ public final class KeyboardUtils {
 
     private static int getContentViewInvisibleHeight(final Activity activity) {
         final View contentView = activity.findViewById(android.R.id.content);
-        Rect outRect = new Rect();
+        final Rect outRect = new Rect();
         contentView.getWindowVisibleDisplayFrame(outRect);
+        LogUtils.d(contentView.getTop(), contentView.getBottom(), outRect.top, outRect.bottom);
         return contentView.getBottom() - outRect.bottom;
     }
 
@@ -129,20 +140,39 @@ public final class KeyboardUtils {
      */
     public static void registerSoftInputChangedListener(final Activity activity,
                                                         final OnSoftInputChangedListener listener) {
+        final int flags = activity.getWindow().getAttributes().flags;
+        if ((flags & WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS) != 0) {
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         final View contentView = activity.findViewById(android.R.id.content);
         sContentViewInvisibleHeightPre = getContentViewInvisibleHeight(activity);
-        contentView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+        onSoftInputChangedListener = listener;
+        onGlobalLayoutListener = new OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (listener != null) {
+                if (onSoftInputChangedListener != null) {
                     int height = getContentViewInvisibleHeight(activity);
                     if (sContentViewInvisibleHeightPre != height) {
-                        listener.onSoftInputChanged(height);
+                        onSoftInputChangedListener.onSoftInputChanged(height);
                         sContentViewInvisibleHeightPre = height;
                     }
                 }
             }
-        });
+        };
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
+    }
+
+    /**
+     * Register soft input changed listener.
+     *
+     * @param activity The activity.
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static void unregisterSoftInputChangedListener(final Activity activity) {
+        final View contentView = activity.findViewById(android.R.id.content);
+        contentView.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
+        onSoftInputChangedListener = null;
+        onGlobalLayoutListener = null;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 Gradle:
 ```groovy
-implementation 'com.blankj:utilcode:1.14.0'
+implementation 'com.blankj:utilcode:1.16.3'
 ```
 
 
@@ -25,6 +25,7 @@ U needn't do anything, because I add `consumerProguardFiles 'proguard-rules.pro'
 ```
 isActivityExists
 startActivity
+startActivityForResult
 startActivities
 startHomeActivity
 getActivityList
@@ -40,6 +41,8 @@ finishAllActivitiesExceptNewest
 
 * ### About App -> [AppUtils.java][app.java] -> [Demo][app.demo]
 ```
+registerAppStatusChangedListener
+unregisterAppStatusChangedListener
 installApp
 installAppSilent
 uninstallApp
@@ -90,19 +93,19 @@ isNavBarVisible
 * ### About Cache -> [CacheUtils.java][cache.java] -> [Test][cache.test]
 ```
 getInstance
-put
-getBytes
-getString
-getJSONObject
-getJSONArray
-getBitmap
-getDrawable
-getParcelable
-getSerializable
-getCacheSize
-getCacheCount
-remove
-clear
+Instance.put
+Instance.getBytes
+Instance.getString
+Instance.getJSONObject
+Instance.getJSONArray
+Instance.getBitmap
+Instance.getDrawable
+Instance.getParcelable
+Instance.getSerializable
+Instance.getCacheSize
+Instance.getCacheCount
+Instance.remove
+Instance.clear
 ```
 
 * ### About Clean -> [CleanUtils.java][clean.java] -> [Demo][clean.demo]
@@ -333,6 +336,7 @@ hideSoftInput
 toggleSoftInput
 isSoftInputVisible
 registerSoftInputChangedListener
+unregisterSoftInputChangedListener
 fixSoftInputLeaks
 clickBlankArea2HideSoftInput
 ```
@@ -468,6 +472,16 @@ getReplaceFirst
 getReplaceAll
 ```
 
+* ### About Resource -> [ResourceUtils.java][resource.java] -> [Demo][resource.demo]
+```
+copyFileFromAssets
+readAssets2String
+readAssets2List
+copyFileFromRaw
+readRaw2String
+readRaw2List
+```
+
 * ### About Screen -> [ScreenUtils.java][screen.java] -> [Demo][screen.demo]
 ```
 getScreenWidth
@@ -579,16 +593,16 @@ create
 * ### About SP -> [SPUtils.java][sp.java] -> [Demo][sp.demo]
 ```
 getInstance
-put
-getString
-getInt
-getLong
-getFloat
-getBoolean
-getAll
-contains
-remove
-clear
+Instance.put
+Instance.getString
+Instance.getInt
+Instance.getLong
+Instance.getFloat
+Instance.getBoolean
+Instance.getAll
+Instance.contains
+Instance.remove
+Instance.clear
 ```
 
 * ### About String -> [StringUtils.java][string.java] -> [Test][string.test]
@@ -605,6 +619,35 @@ lowerFirstLetter
 reverse
 toDBC
 toSBC
+```
+
+* ### About Thread -> [ThreadUtils.java][thread.java] -> [Test][thread.test]
+```
+isMainThread
+getFixedPool
+getSinglePool
+getCachedPool
+getIoPool
+getCpuPool
+executeByFixed
+executeByFixedWithDelay
+executeByFixedAtFixRate
+executeBySingle
+executeBySingleWithDelay
+executeBySingleAtFixRate
+executeByCached
+executeByCachedWithDelay
+executeByCachedAtFixRate
+executeByIo
+executeByIoWithDelay
+executeByIoAtFixRate
+executeByCpu
+executeByCpuWithDelay
+executeByCpuAtFixRate
+executeByCustom
+executeByCustomWithDelay
+executeByCustomAtFixRate
+cancel
 ```
 
 * ### About Time -> [TimeUtils.java][time.java] -> [Test][time.test]
@@ -633,9 +676,7 @@ isToday
 isLeapYear
 getChineseWeek
 getUSWeek
-getWeekIndex
-getWeekOfMonth
-getWeekOfYear
+getValueByCalendarField
 getChineseZodiac
 getZodiac
 ```
@@ -746,6 +787,9 @@ getComments
 [regex.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/RegexUtils.java
 [regex.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/RegexUtilsTest.java
 
+[resource.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ResourceUtils.java
+[resource.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/resource/ResourceActivity.java
+
 [screen.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ScreenUtils.java
 [screen.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/screen/ScreenActivity.java
 
@@ -769,6 +813,9 @@ getComments
 
 [string.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/StringUtils.java
 [string.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/StringUtilsTest.java
+
+[thread.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ThreadUtils.java
+[thread.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/ThreadUtilsTest.java
 
 [time.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/TimeUtils.java
 [time.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/TimeUtilsTest.java
